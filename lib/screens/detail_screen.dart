@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:wisata_candi/models/candi.dart';
+import 'package:wisata_candi/providers/favorite_provider.dart';
 
 class DetailScreen extends StatelessWidget {
   final Candi candi;
@@ -9,6 +11,9 @@ class DetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 1. Membaca status favorit candi dari FavoriteProvider
+    final isFav = context.watch<FavoriteProvider>().isFavorite(candi.name);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -37,7 +42,9 @@ class DetailScreen extends StatelessWidget {
                     ),
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
                 ),
@@ -57,9 +64,15 @@ class DetailScreen extends StatelessWidget {
                         candi.name,
                         style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
+                      // 2. Tombol Favorit yang terhubung ke Provider
                       IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_border),
+                        onPressed: () {
+                          context.read<FavoriteProvider>().toggle(candi.name);
+                        },
+                        icon: Icon(
+                          isFav ? Icons.favorite : Icons.favorite_border,
+                          color: isFav ? Colors.red : null,
+                        ),
                       ),
                     ],
                   ),
