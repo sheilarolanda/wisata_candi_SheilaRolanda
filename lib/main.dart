@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'providers/favorite_provider.dart';
-import 'providers/auth_provider.dart';
-import 'screens/detail_screen.dart';
-import 'screens/sign_in_screen.dart'; // Import halaman Sign In
-import 'models/candi.dart';
-import 'data/candi_data.dart';
+import 'package:wisata_candi/data/candi_data.dart';
+import 'package:wisata_candi/providers/auth_provider.dart';
+import 'package:wisata_candi/providers/favorite_provider.dart';
+import 'package:wisata_candi/screens/detail_screen.dart';
 
 void main() {
   runApp(
@@ -39,7 +37,7 @@ class MyApp extends StatelessWidget {
             .copyWith(primary: Colors.deepPurple, surface: Colors.deepPurple[50]),
         useMaterial3: true,
       ),
-      home: const SignInScreen(), // Menampilkan halaman Sign In
+      home: DetailScreen(candi: candiList[0]),
     );
   }
 }
